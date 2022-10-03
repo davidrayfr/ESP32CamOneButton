@@ -54,17 +54,6 @@ void redLedChange()
     digitalWrite(RED_LED_PIN, !digitalRead(RED_LED_PIN));
 }
 
-void whiteLedBlink()
-{
-    digitalWrite(WHITE_LED_PIN, !digitalRead(WHITE_LED_PIN));
-}
-
-void redLedBlink()
-{
-    digitalWrite(RED_LED_PIN, !digitalRead(RED_LED_PIN));
-}
-
-
 void doubleClick()
 {
 Serial.println("Double Click detected > Clignotement LED BLANCHE");
