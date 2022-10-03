@@ -12,7 +12,8 @@
 #define RED_LED_PIN 33 // LED rouge: GPIO 33
 #define WHITE_LED_PIN 4 // LED blanche: GPIO 4 - ESP32 CAM
 #define BUTTON_PIN 12 // Bouton Branché sur GPIO 12
-#define TIME_LONG_CLICK 1000 // Detection Tps Mini long clic
+#define TIME_LONG_CLICK_DETECTION 5000 // Detection Tps Mini long clic in Millisecondes
+#define TIME_LONG_CLICK_START 1000 // Detection start Long Click
 
 // Setup a new OneButton on pin PIN_INPUT
 // The 2. parameter activeLOW is true, because external wiring sets the button to LOW when pressed.
@@ -23,15 +24,23 @@ int whiteLedState = LOW;
 int redLedState = LOW;
 unsigned long pressStartTime;
 
+#if defined(ESP32)
+void IRAM_ATTR checkTicks() {
+  // include all buttons here to be checked
+  button.tick(); // just call tick() to check the state.
+}
+
+#endif
+
 void doubleClick()
 {
-Serial.println("Double Click");
+Serial.println("Double Click detected");
 
 }
 
 void simpleClick()
 {
-Serial.println("Simple Click");
+Serial.println("Simple Click detected");
 
 }
 
@@ -44,7 +53,7 @@ Serial.println("Long Click");
 // this function will be called when the button was held down for 1 second or more.
 void pressStart() {
   Serial.println("pressStart()");
-  pressStartTime = millis() - 1000; // as set in setPressTicks()
+  pressStartTime = millis() - TIME_LONG_CLICK_START; // as set in setPressTicks()
 } // pressStart()
 
 
@@ -53,7 +62,11 @@ void pressStop() {
   Serial.print("pressStop(");
   Serial.print(millis() - pressStartTime);
   Serial.println(") detected.");
-} // pressStop()
+  if ((millis() - pressStartTime)>TIME_LONG_CLICK_DETECTION)
+    {
+      Serial.println("long hold detected");
+    }
+  } // pressStop()
 
 void setup()
 {
@@ -71,17 +84,14 @@ void setup()
     // link the doubleclick function to be called on a doubleclick event.
     button.attachDoubleClick(doubleClick);
     button.attachClick(simpleClick);
-    button.setPressTicks(1000); // that is the time when LongPressStart is called
+    button.setPressTicks(TIME_LONG_CLICK_START); // that is the time when LongPressStart is called
     button.attachLongPressStart(pressStart);
     button.attachLongPressStop(pressStop);
 }
-
-
 
 void loop()
 {
  
     button.tick();
-    
     delay(10);
 }
