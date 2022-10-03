@@ -3,7 +3,7 @@
 // Bouton sur GPIO 12
 // Allumage diode blanche
 // Check 1 clic -> On allume la Led Blanche
-// Check 2 clic -> clignotement Led Blanche
+// Check 2 clic -> Pulsation Led Blanche
 // Check Long Clic -Clignotement Led Rouge et Blanche
 // Lorsque que l'on appui sur le bouton > annule les clignotements et eteint la lampe
 // Test Git
@@ -18,7 +18,7 @@
 #define TIME_LONG_CLICK_START 1000 // Detection start Long Click
 #define TIME_BLINK 50 // Time - Frequency blink for Led in MilliSecond
 #define canalPWM 7 // un canal PWM disponible
-#define MAX_PWM 200 // un canal PWM disponible
+#define MAX_PWM 128 // un canal PWM disponible
 
 // Setup a new OneButton on pin PIN_INPUT
 // The 2. parameter activeLOW is true, because external wiring sets the button to LOW when pressed.
@@ -58,9 +58,8 @@ void IRAM_ATTR onTimer() {
 void whiteLedEvolution()
 {
     //digitalWrite(WHITE_LED_PIN, !digitalRead(WHITE_LED_PIN));
-  ledcWrite(canalPWM, (10+(ledBright*10)%245));   //  LED blanche allumée (rapport cyclique 0,1%!)
+  ledcWrite(canalPWM, 5+((ledBright*10)%250));   //  LED blanche allumée (rapport cyclique 0,1%!)
   ledBright++;
-  Serial.println(ledBright);
   }
 
 void whiteLedChange()
