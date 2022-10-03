@@ -6,6 +6,7 @@
 // Check 2 clic -> clignotement Led Blanche
 // Check Long Clic -Clignotement Led Rouge et Blanche
 // Lorsque que l'on appui sur le bouton > annule les clignotements et eteint la lampe
+// Test Git
 
 #include <Arduino.h>
 #include "OneButton.h"
