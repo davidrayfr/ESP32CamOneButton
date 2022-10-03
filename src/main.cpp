@@ -5,6 +5,7 @@
 // Check 1 clic -> On allume la Led Blanche
 // Check 2 clic -> clignotement Led Blanche
 // Check Long Clic -Clignotement Led Rouge et Blanche
+// Lorsque que l'on appui sur le bouton > annule les clignotements et eteint la lampe
 
 #include <Arduino.h>
 #include "OneButton.h"
@@ -77,6 +78,8 @@ Serial.println("Simple Click detected");
 if (timerAlarmEnabled(My_timer)) {
   timerAlarmDisable(My_timer);
   longClickId=false;
+  digitalWrite(RED_LED_PIN, LOW);
+  digitalWrite(WHITE_LED_PIN, LOW);
   }
 whiteLedChange();
 }
@@ -94,6 +97,8 @@ void pressStart() {
   if (timerAlarmEnabled(My_timer)) {
     timerAlarmDisable(My_timer);
     longClickId=false;
+    digitalWrite(RED_LED_PIN, LOW);
+    digitalWrite(WHITE_LED_PIN, LOW);
   }
   pressStartTime = millis() - TIME_LONG_CLICK_START; // as set in setPressTicks()
 } // pressStart()
