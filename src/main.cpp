@@ -90,7 +90,7 @@ Serial.println("Simple Click detected");
 if (timerAlarmEnabled(My_timer)) {
   timerAlarmDisable(My_timer);
   longClickId=false;
-  digitalWrite(RED_LED_PIN, LOW);
+  digitalWrite(RED_LED_PIN, HIGH);
   ledcWrite(canalPWM, 0);   //  LED blanche éteinte (rapport cyclique 0%)
   }
   else
@@ -147,7 +147,7 @@ void setup()
     //digitalWrite(WHITE_LED_PIN, HIGH);
     ledcWrite(canalPWM, 0);   //  LED blanche éteinte (rapport cyclique 0%)
 
-    digitalWrite(RED_LED_PIN, LOW);
+    digitalWrite(RED_LED_PIN, HIGH);
 
     // link the doubleclick function to be called on a doubleclick event.
     button.attachDoubleClick(doubleClick);
