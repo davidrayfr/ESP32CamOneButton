@@ -6,7 +6,7 @@
 // Check 2 clic -> Pulsation Led Blanche
 // Check Long Clic -Clignotement Led Rouge et Blanche
 // Lorsque que l'on appui sur le bouton > annule les clignotements et eteint la lampe
-// Test Git
+// Ajout Variation Led
 
 #include <Arduino.h>
 #include "OneButton.h"
@@ -16,9 +16,12 @@
 #define BUTTON_PIN 12 // Bouton Branché sur GPIO 12
 #define TIME_LONG_CLICK_DETECTION 5000 // Detection Tps Mini long clic in Millisecondes
 #define TIME_LONG_CLICK_START 1000 // Detection start Long Click
-#define TIME_BLINK 50 // Time - Frequency blink for Led in MilliSecond
+#define TIME_BLINK 100 // Time - Frequency blink for Led in MilliSecond
 #define canalPWM 7 // un canal PWM disponible
-#define MAX_PWM 128 // un canal PWM disponible
+#define MAX_PWM 128 // Intensity Max Led
+
+const int AMPLITUDE_MAX_LED=255; // Amplitude Max LED 
+const int COEF=10;
 
 // Setup a new OneButton on pin PIN_INPUT
 // The 2. parameter activeLOW is true, because external wiring sets the button to LOW when pressed.
@@ -58,7 +61,10 @@ void IRAM_ATTR onTimer() {
 void whiteLedEvolution()
 {
     //digitalWrite(WHITE_LED_PIN, !digitalRead(WHITE_LED_PIN));
-  ledcWrite(canalPWM, 5+((ledBright*10)%250));   //  LED blanche allumée (rapport cyclique 0,1%!)
+  //ledcWrite(canalPWM, 5+((ledBright*10)%250));   //  LED blanche allumée (rapport cyclique 0,1%!)
+  int j=ledBright*COEF;
+  // Variation Led Blanche
+  ledcWrite(canalPWM,(j/AMPLITUDE)%2)*(AMPLITUDE-j%AMPLITUDE)+(((AMPLITUDE+j)/AMPLITUDE)%2)*(j%AMPLITUDE));
   ledBright++;
   }
 
