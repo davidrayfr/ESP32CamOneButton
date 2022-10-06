@@ -64,7 +64,7 @@ void whiteLedEvolution()
   //ledcWrite(canalPWM, 5+((ledBright*10)%250));   //  LED blanche allumée (rapport cyclique 0,1%!)
   int j=ledBright*COEF;
   // Variation Led Blanche
-  ledcWrite(canalPWM,(j/AMPLITUDE)%2)*(AMPLITUDE-j%AMPLITUDE)+(((AMPLITUDE+j)/AMPLITUDE)%2)*(j%AMPLITUDE));
+  ledcWrite(canalPWM,((j/AMPLITUDE_MAX_LED)%2)*(AMPLITUDE_MAX_LED-j%AMPLITUDE_MAX_LED)+(((AMPLITUDE_MAX_LED+j)/AMPLITUDE_MAX_LED)%2)*(j%AMPLITUDE_MAX_LED));
   ledBright++;
   }
 
